@@ -1,9 +1,14 @@
 import { Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
-import React from 'react';
+import React, { useEffect } from 'react';
 import LoginForm from './LoginForm';
 
 const Login = () => {
+  useEffect(() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+  }, []);
+
   return (
     <Box>
       <Container>
