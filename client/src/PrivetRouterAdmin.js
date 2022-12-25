@@ -10,7 +10,7 @@ const PrivetRouterAdmin = () => {
 
   let user = userData?.user?.role;
 
-  console.log('aaaaaaaaaaaaa',user);
+;
 
   let authAdmin = false;
   if (token) {

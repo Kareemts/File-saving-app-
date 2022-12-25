@@ -32,26 +32,29 @@ const Navbar = () => {
           <Box p>
             <Typography
               variant="h6"
+              fontWeight={'bold'}
               sx={{
                 display: { xs: 'none', sm: 'block' },
                 color: 'black',
                 cursor: 'pointer',
               }}
-              // onClick={() => navigate('/Home')}
             >
-              File storager
+              File Saver
             </Typography>
             <Box
               sx={{ display: { xs: 'block', sm: 'none', cursor: 'pointer' } }}
-              // onClick={() => navigate('/Home')}
             >
               <Box
                 display={'flex'}
                 justifyContent="center"
                 alignItems={'center'}
               >
-                <Typography variant="h6" sx={{ color: 'black', fontSize: 12 }}>
-                  File storager
+                <Typography
+                  fontWeight={'bold'}
+                  variant="h6"
+                  sx={{ color: 'black', fontSize: 12 }}
+                >
+                  File Saver
                 </Typography>
               </Box>
             </Box>

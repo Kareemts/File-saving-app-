@@ -1,12 +1,12 @@
-import { CardMedia, Divider } from '@mui/material';
-import { Box } from '@mui/system'
-import React from 'react'
+import { CardMedia, Divider, Grid } from '@mui/material';
+import { Box } from '@mui/system';
+import React from 'react';
 import GetAppIcon from '@mui/icons-material/GetApp';
 
-const AllFiles = ({files}) => {
+const AllFiles = ({ files }) => {
   return (
     <Box>
-        <Box>
+      <Box>
         {files.map((file, index) => {
           return (
             <Box
@@ -50,7 +50,7 @@ const AllFiles = ({files}) => {
                     src="https://img.icons8.com/cute-clipart/512/pdf.png"
                     alt="green iguana"
                   />
-                  <Box>{file.givenFileName}</Box>
+                  <Box maxWidth={200}>{file.FileName}</Box>
                 </Box>
               </Box>
 
@@ -85,31 +85,32 @@ const AllFiles = ({files}) => {
                 <Divider />
                 <Box
                   mt={2}
-                  component={'div'}
-                  // onClick={() => download(file.givenFileName)}
                   display="flex"
                   justifyContent="center"
                   alignItems={'center'}
                 >
-                  <GetAppIcon />
+                  {' '}
+                  <a
+                    download
+                    target="blank"
+                    href={`/files/${file.FileName}.pdf`}
+                    mt={2}
+                    component={'div'}
+                  >
+                    <GetAppIcon />
+                  </a>
                 </Box>
               </Box>
-
-              {/* <a
-                  href={
-                    'https://drive.google.com/file/d/1MHjYD3F28WBB0pLXWEJwpK0TCkvG7agx/view?usp=share_link'
-                  }
-                  download
-                  target="blank"
-                >
-                  <GetAppIcon />
-                </a> */}
             </Box>
           );
         })}
+
+        <Grid item xs={6}>
+          3
+        </Grid>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default AllFiles
+export default AllFiles;

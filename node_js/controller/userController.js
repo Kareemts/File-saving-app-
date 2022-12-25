@@ -34,10 +34,6 @@ const login = async (req, res) => {
     if (user) {
       bcrypt.compare(req.body.password, user.password).then(async (result) => {
         if (result) {
-          console.log(result);
-          // let userData = {};
-          // userData = user;
-          // console.log(userData);
           jwt = await authentication.jwtAthentication({ user });
           res
             .status(200)
@@ -57,14 +53,14 @@ const login = async (req, res) => {
 
 const uploadPdf = (req, res) => {
   const data = {};
-  data.givenFileName = req.query.pdfName + Date.now();
   data.userId = req.query.userId;
   data.uploadedTime = Date.now();
   try {
     const storage = multer.diskStorage({
       destination: path.join(__dirname, '../public/', 'files'),
       filename: (req, file, cb) => {
-        cb(null, data.givenFileName + '.pdf');
+        data.FileName = file.originalname + '-' + Date.now();
+        cb(null, data.FileName + '.pdf');
       },
     });
 
@@ -75,7 +71,6 @@ const uploadPdf = (req, res) => {
         console.log('no file');
         res.status(200).json({ noFile: 'select image' });
       } else {
-        console.log(data);
         fileSchema
           .file_data(data)
           .save()
@@ -94,7 +89,6 @@ const uploadPdf = (req, res) => {
 };
 
 const getUploadedFiles = async (req, res) => {
-  console.log(req.query.userId);
   try {
     const files = await fileSchema.file_data.find({
       userId: req.query.userId,
@@ -105,23 +99,14 @@ const getUploadedFiles = async (req, res) => {
   }
 };
 
-const download = (req, res) => {
-  console.log(req.query);
-  // res.sendFile(path.resolve(__dirname, 'public', '1668658236839-undefined.png'));
-  res.download('./1668658236839-undefined.png', function (error) {
-    console.log('Error : ', error);
-  });
-};
-
 const serchFileUser = async (req, res) => {
   const searchingData = req.query.searchingData.trim();
-  console.log(req.query);
   try {
     if (!req.query.searchingData == '') {
       const serchResult = await fileSchema.file_data.find({
         $and: [
           { userId: req.query.userId },
-          { givenFileName: { $regex: searchingData, $options: 'i' } },
+          { FileName: { $regex: searchingData, $options: 'i' } },
         ],
       });
       res.status(200).json(serchResult);
@@ -136,6 +121,5 @@ module.exports = {
   login,
   uploadPdf,
   getUploadedFiles,
-  download,
   serchFileUser,
 };

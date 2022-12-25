@@ -4,9 +4,9 @@ const {
   login,
   uploadPdf,
   getUploadedFiles,
-  download,
   serchFileUser,
 } = require('../controller/userController');
+const { verifyToken } = require('../middleware/middleware');
 var router = express.Router();
 
 /* router for signUp */
@@ -16,15 +16,12 @@ router.post('/signUp', signUp);
 router.post('/login', login);
 
 /* router for uploding pdf */
-router.post('/uploadPdf', uploadPdf);
+router.post('/uploadPdf', verifyToken, uploadPdf);
 
 /* router for getting uresrUploaded posts */
-router.get('/getUploadedFiles', getUploadedFiles);
-
-/* router for downloading the file */
-router.get('/download', download);
+router.get('/getUploadedFiles', verifyToken, getUploadedFiles);
 
 /* router for searching  file */
-router.get('/serchFileUser', serchFileUser);
+router.get('/serchFileUser', verifyToken, serchFileUser);
 
 module.exports = router;

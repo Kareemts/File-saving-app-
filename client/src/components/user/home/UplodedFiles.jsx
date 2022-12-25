@@ -1,4 +1,4 @@
-import { CardMedia, Divider, InputBase, Typography } from '@mui/material';
+import { InputBase, Typography } from '@mui/material';
 import React from 'react';
 import jwtDecode from 'jwt-decode';
 import { useEffect } from 'react';
@@ -21,8 +21,6 @@ const UplodedFiles = ({ reload }) => {
 
   let userData = jwtDecode(localStorage.getItem('token'));
 
-  console.log(userData);
-
   useEffect(() => {
     axiosUrl
       .get('/getUploadedFiles', {
@@ -43,20 +41,6 @@ const UplodedFiles = ({ reload }) => {
       });
   }, [userData.user._id, reload, navigate]);
 
-  // const download = (fileName) => {
-  //   axiosUrl
-  //     .get('/download', {
-  //       responseType: 'blob',
-  //       params: {
-  //         fileName,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log(result.data);
-  //     })
-  //     .catch((err) => {});
-  // };
-
   const serchUser = () => {
     if (searchingData === '') {
       setNoResults(false);
@@ -75,12 +59,14 @@ const UplodedFiles = ({ reload }) => {
           if (result.data.length > 0) setSearchReasult(false);
           setSearchData(result.data);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          navigate('/error');
+        });
     }
   };
 
   return (
-    <Box p={3} boxShadow=" 0px 10px 37px -3px rgba(0,0,0,0.1)" borderRadius={3}>
+    <Box p={3} borderRadius={3}>
       <Box display="flex" justifyContent="center">
         <Typography fontWeight={'bold'}>Your saved files</Typography>
       </Box>

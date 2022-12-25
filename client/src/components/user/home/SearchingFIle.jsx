@@ -2,7 +2,8 @@ import { CardMedia, Divider } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import GetAppIcon from '@mui/icons-material/GetApp';
-const SearchingFIle = ({serchData}) => {
+
+const SearchingFIle = ({ serchData }) => {
   return (
     <Box>
       <Box>
@@ -49,7 +50,7 @@ const SearchingFIle = ({serchData}) => {
                     src="https://img.icons8.com/cute-clipart/512/pdf.png"
                     alt="green iguana"
                   />
-                  <Box>{file.givenFileName}</Box>
+                  <Box maxWidth={200}>{file.FileName}</Box>
                 </Box>
               </Box>
 
@@ -84,25 +85,22 @@ const SearchingFIle = ({serchData}) => {
                 <Divider />
                 <Box
                   mt={2}
-                  component={'div'}
-                  // onClick={() => download(file.givenFileName)}
                   display="flex"
                   justifyContent="center"
                   alignItems={'center'}
                 >
-                  <GetAppIcon />
+                  {' '}
+                  <a
+                    download
+                    target="blank"
+                    href={`/files/${file.FileName}.pdf`}
+                    mt={2}
+                    component={'div'}
+                  >
+                    <GetAppIcon />
+                  </a>
                 </Box>
               </Box>
-
-              {/* <a
-                  href={
-                    'https://drive.google.com/file/d/1MHjYD3F28WBB0pLXWEJwpK0TCkvG7agx/view?usp=share_link'
-                  }
-                  download
-                  target="blank"
-                >
-                  <GetAppIcon />
-                </a> */}
             </Box>
           );
         })}

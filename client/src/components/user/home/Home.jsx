@@ -1,4 +1,4 @@
-import { Alert, Box, Button, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
 import { axiosUrl } from '../../../axios/axiosInstance';
@@ -8,50 +8,36 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [pdfFile, setPdfFile] = useState('');
-  const [pdfName, setPdfName] = useState('');
   const [noFile, setNoFile] = useState(false);
-  const [pdfErr, setPdfErr] = useState(false);
-  const [pdfNameErr, setPdfNameErr] = useState(false);
-  const [formError, setFormErr] = useState(false);
   const [success, setSuccess] = useState(false);
   const [reload, setReload] = useState(null);
   let userData = jwtDecode(localStorage.getItem('token'));
   const navigat = useNavigate();
 
   const upload = () => {
-    if (pdfFile === '') setNoFile(true);
-    if (!pdfFile.type === 'application/pdf') setPdfErr(true);
-
-    // if (
-    //   !pdfFile === '' &&
-    //   pdfFile.type === 'application/pdf' &&
-    //   !pdfName === ''
-    // ) {
-
-    // }
-
-    const data = new FormData();
-    data.append('file', pdfFile.file);
-    axiosUrl
-      .post('/uploadPdf', data, {
-        params: {
-          pdfName,
-          userId: userData.user._id,
-        },
-      })
-      .then((result) => {
-        if (result.data.noFile) setNoFile(true);
-        if (result.data.posted) setSuccess(true);
-        setReload(Math.random());
-      })
-      .catch((err) => {
-        navigat('/error');
-      });
+    if (pdfFile?.file?.type === 'application/pdf') {
+      const data = new FormData();
+      data.append('file', pdfFile.file);
+      axiosUrl
+        .post('/uploadPdf', data, {
+          params: {
+            userId: userData.user._id,
+          },
+        })
+        .then((result) => {
+          if (result.data.noFile) setNoFile(true);
+          if (result.data.posted) setSuccess(true);
+          setReload(Math.random());
+          setPdfFile('');
+        })
+        .catch((err) => {
+          navigat('/error');
+        });
+    } else {
+      setNoFile(true);
+    }
 
     setTimeout(() => {
-      setFormErr(false);
-      setPdfNameErr(false);
-      setPdfErr(false);
       setNoFile(false);
       setSuccess(false);
     }, 2000);
@@ -75,7 +61,9 @@ const Home = () => {
           borderRadius={3}
         >
           <Box mt={2}>
-            <Typography>Upload new file</Typography>
+            <Typography fontWeight={'bold'}>
+              UPLOAD AND SAVE YOUR FILE
+            </Typography>
           </Box>
           {noFile ? (
             <Alert
@@ -88,7 +76,7 @@ const Home = () => {
               }}
               severity="warning"
             >
-              <Box>Select a file</Box>
+              <Box>Select a PDF file</Box>
             </Alert>
           ) : (
             ''
@@ -109,21 +97,6 @@ const Home = () => {
           ) : (
             ''
           )}
-          {pdfErr ? (
-            <Alert
-              sx={{
-                fontSize: 12,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              severity="warning"
-            >
-              <Box>Only accept PDF </Box>
-            </Alert>
-          ) : (
-            ''
-          )}
 
           <Box mt={3} mb={2}>
             <input
@@ -133,35 +106,7 @@ const Home = () => {
               onChange={(e) => setPdfFile({ file: e.target.files[0] })}
             />
           </Box>
-          {pdfNameErr ? (
-            <Alert
-              sx={{
-                fontSize: 12,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              severity="warning"
-            >
-              <Box>Please add a file name</Box>
-            </Alert>
-          ) : (
-            ''
-          )}
-          <Box>
-            <TextField
-              margin="normal"
-              size="small"
-              required
-              fullWidth
-              id="email"
-              label="File Name"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => setPdfName(e.target.value)}
-            />
-          </Box>
+
           <Button variant="contained" size="small" onClick={() => upload()}>
             save
           </Button>

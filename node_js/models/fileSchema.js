@@ -5,7 +5,7 @@ const ObjectId = Schema.ObjectId;
 
 const file_Schema = new mongoose.Schema({
   userId: ObjectId,
-  givenFileName: String,
+  FileName: String,
   uploadedTime: Date,
   userId: { type: ObjectId, ref: 'users' },
 });

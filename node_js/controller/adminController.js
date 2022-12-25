@@ -18,7 +18,7 @@ const serchFile = async (req, res) => {
     if (!req.query.searchingData == '') {
       const serchResult = await fileSchema.file_data
         .find({
-          givenFileName: { $regex: searchingData, $options: 'i' },
+          FileName: { $regex: searchingData, $options: 'i' },
         })
         .populate({ path: 'userId' });
       res.status(200).json(serchResult);

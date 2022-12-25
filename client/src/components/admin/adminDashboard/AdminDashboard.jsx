@@ -14,6 +14,8 @@ const AdminDashboard = () => {
   const [searchResult, setSearchReasult] = useState(false);
   const [searchingData, setSearchingData] = useState('');
   const [noFiles, setNoFiles] = useState(false);
+  const navigat = useNavigate();
+
   useEffect(() => {
     axiosUrl
       .get('/admin/getAllFiles')
@@ -45,7 +47,9 @@ const AdminDashboard = () => {
           if (result.data.length > 0) setSearchReasult(false);
           setSearchData(result.data);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          navigat('/error');
+        });
     }
   };
   return (
@@ -53,7 +57,7 @@ const AdminDashboard = () => {
       <Box>
         <Box display="flex" justifyContent="center">
           <Typography fontWeight={'bold'} fontSize={25}>
-            ALL FILES
+            ALL FILES ({files.length})
           </Typography>
         </Box>
         {noFiles ? (

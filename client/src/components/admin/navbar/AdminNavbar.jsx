@@ -2,7 +2,6 @@ import { AppBar, Avatar, Box, Menu, MenuItem, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Icones, StyledToolbar } from './AdminNavStyle';
 
-
 import AdminSearchReasult from './AdminSearchReasult';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,6 +32,7 @@ const AdminNavbar = () => {
         <StyledToolbar>
           <Typography
             variant="h6"
+            fontWeight={'bold'}
             sx={{
               display: { xs: 'none', sm: 'block' },
               color: 'black',
@@ -40,7 +40,7 @@ const AdminNavbar = () => {
             }}
             // onClick={() => navigate('/Home')}
           >
-            File storager
+            File Saver
           </Typography>
 
           <Box
@@ -48,17 +48,18 @@ const AdminNavbar = () => {
             // onClick={() => navigate('/Home')}
           >
             <Box display={'flex'} justifyContent="center" alignItems={'center'}>
-              <Typography variant="h6" sx={{ color: 'black', fontSize: 12 }}>
-                File storager
+              <Typography
+                fontWeight={'bold'}
+                variant="h6"
+                sx={{ color: 'black', fontSize: 12 }}
+              >
+                File Saver
               </Typography>
             </Box>
           </Box>
 
-          <Icones>
-         
-            />
-          </Icones>
-        
+          <Icones>/></Icones>
+
           <Box p>
             <Box
               display={'flex'}
