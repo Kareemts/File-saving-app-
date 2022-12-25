@@ -2,8 +2,23 @@ import { CardMedia, Divider, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { axiosUrl } from '../../../axios/axiosInstance';
 
 const AllFiles = ({ files }) => {
+  const deleteFile = (fileId) => {
+    axiosUrl
+      .delete('/deleteFile', {
+        params: {
+          fileId,
+        },
+      })
+      .then((result) => {
+        window.location.reload();
+      })
+      .catch((err) => {});
+  };
+
   return (
     <Box>
       <Box>
@@ -99,6 +114,29 @@ const AllFiles = ({ files }) => {
                   >
                     <GetAppIcon />
                   </a>
+                </Box>
+              </Box>
+              <Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems={'center'}
+                  fontWeight={'bold'}
+                >
+                  Delete
+                </Box>
+                <Divider />
+                <Box
+                  mt={2}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems={'center'}
+                  component={'div'}
+                  color={'red'}
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => deleteFile(file._id)}
+                >
+                  <DeleteIcon />
                 </Box>
               </Box>
             </Box>

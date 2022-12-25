@@ -116,10 +116,25 @@ const serchFileUser = async (req, res) => {
   }
 };
 
+const deleteFile = async (req, res) => {
+  try {
+    const fileDeleted = await fileSchema.file_data.findByIdAndRemove(
+      req.query.fileId,
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(fileDeleted);
+  } catch (error) {
+    res.status(200).json({ error: true });
+  }
+};
+
 module.exports = {
   signUp,
   login,
   uploadPdf,
   getUploadedFiles,
   serchFileUser,
+  deleteFile,
 };

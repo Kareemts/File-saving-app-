@@ -5,6 +5,7 @@ const {
   uploadPdf,
   getUploadedFiles,
   serchFileUser,
+  deleteFile,
 } = require('../controller/userController');
 const { verifyToken } = require('../middleware/middleware');
 var router = express.Router();
@@ -23,5 +24,8 @@ router.get('/getUploadedFiles', verifyToken, getUploadedFiles);
 
 /* router for searching  file */
 router.get('/serchFileUser', verifyToken, serchFileUser);
+
+/* router for deleting file */
+router.delete('/deleteFile', verifyToken, deleteFile);
 
 module.exports = router;

@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AllFiles from './AllFiles';
 import SearchingFIle from './SearchingFIle';
 
-const UplodedFiles = ({ reload }) => {
+const UplodedFiles = ({ reload, setReload }) => {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [noFiles, setNoFiles] = useState(false);
@@ -110,7 +110,11 @@ const UplodedFiles = ({ reload }) => {
         ''
       )}
       {noResult ? (
-        <SearchingFIle serchData={serchData} />
+        <SearchingFIle
+          serchData={serchData}
+          setReload={setReload}
+          reload={reload}
+        />
       ) : (
         <AllFiles files={files} />
       )}

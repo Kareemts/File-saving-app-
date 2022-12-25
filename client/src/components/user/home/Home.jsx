@@ -114,7 +114,7 @@ const Home = () => {
 
         <Box sx={{ width: '100%' }} mt={3}>
           <Box>
-            <UplodedFiles reload={reload} />
+            <UplodedFiles reload={reload}  />
           </Box>
         </Box>
       </Box>
