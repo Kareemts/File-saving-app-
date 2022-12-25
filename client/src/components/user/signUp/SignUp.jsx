@@ -94,7 +94,7 @@ const SignUp = () => {
       setFormValidation(true);
     } else {
       axiosUrl
-        .post('http://localhost:4000/signUp', {
+        .post('signUp', {
           fullName,
           userName,
           password,
